@@ -4,7 +4,12 @@ const cors = require("cors");
 const port = 3000;
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 const authRoutes = require("./routes/auth");

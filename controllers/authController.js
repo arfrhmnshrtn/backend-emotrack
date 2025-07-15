@@ -85,3 +85,15 @@ exports.login = (req, res) => {
     });
   });
 };
+
+// lupa password
+exports.sendPasswordResetEmail = (req, res) => {
+  const { email } = req.body;
+  const user = User.findUserByEmail(email);
+
+  if (!user) {
+    return res.status(404).json({ message: "User tidak ditemukan" });
+  }
+
+  
+};
