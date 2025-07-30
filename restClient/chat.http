@@ -1,0 +1,10 @@
+### Kirim pertanyaan ke AI (chat)
+POST http://localhost:3000/api/chat/generate
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "prompt": "Saya sering merasa cemas dan susah tidur selama kehamilan. Apa yang bisa saya lakukan?"
+}
+
+

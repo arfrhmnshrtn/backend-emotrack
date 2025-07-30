@@ -1,0 +1,17 @@
+### Simpan Jurnal Harian
+POST http://localhost:3000/api/jurnal/generate
+Content-Type: application/json
+
+{
+  "user_id": 21,
+  "tanggal": "2025-07-30",
+  "keluhan": "Hari ini saya merasa sedikit pusing dan mual sejak bangun tidur. Saya juga merasa sedikit gelisah karena kurang tidur tadi malam."
+}
+
+### ambil jurnal by id
+GET http://localhost:3000/api/jurnal/21
+Content-Type: application/json
+
+{
+  "user_id": 21
+}
