@@ -15,3 +15,10 @@ exports.getJurnals = (user_id, callback) => {
     callback
   );
 };
+
+exports.getJurnalsById = (id, callback) => {
+  db.query("SELECT * FROM jurnal_harian WHERE id = ?", [id], (err, results) => {
+    if (err) return callback(err);
+    callback(null, results[0]); // bisa null kalau tidak ditemukan
+  });
+};
