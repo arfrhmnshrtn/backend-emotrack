@@ -20,9 +20,9 @@ Gunakan **bahasa Indonesia yang lembut, hangat, dan mudah dipahami**, serta hind
 `;
 
 exports.jurnal = async (req, res) => {
-  const { tanggal, keluhan, user_id } = req.body;
+  const { tanggal, mood, keluhan, user_id } = req.body;
 
-  if (!keluhan || !user_id || !tanggal) {
+  if (!keluhan || !user_id || !tanggal || !mood) {
     return res.status(400).json({ error: "Semua field harus diisi" });
   }
 
@@ -43,17 +43,42 @@ exports.jurnal = async (req, res) => {
       response.candidates[0]?.content?.parts[0]?.text ||
       "Tidak ada respons dari AI.";
 
-    Jurnal.saveJurnal(user_id, tanggal, keluhan, aiResponse, (err, result) => {
+    // Cek apakah jurnal sudah ada di tanggal tersebut
+    Jurnal.getJurnalsByDate(user_id, tanggal, (err, existingJournals) => {
       if (err) {
-        console.error("Gagal menyimpan jurnal:", err);
+        console.error("Gagal mengambil jurnal:", err);
         return res
           .status(500)
-          .json({ error: "Gagal menyimpan jurnal ke database" });
+          .json({ error: "Gagal mengambil jurnal dari database" });
       }
 
-      return res
-        .status(201)
-        .json({ message: "Jurnal berhasil disimpan", response: aiResponse });
+      if (existingJournals.length > 0) {
+        return res.status(400).json({
+          message: "Jurnal sudah ada untuk tanggal ini.",
+        });
+      }
+
+      // Simpan jurnal jika belum ada
+      Jurnal.saveJurnal(
+        user_id,
+        tanggal,
+        mood,
+        keluhan,
+        aiResponse,
+        (err, result) => {
+          if (err) {
+            console.error("Gagal menyimpan jurnal:", err);
+            return res
+              .status(500)
+              .json({ error: "Gagal menyimpan jurnal ke database" });
+          }
+
+          return res.status(201).json({
+            message: "Jurnal berhasil disimpan",
+            response: aiResponse,
+          });
+        }
+      );
     });
   } catch (error) {
     console.error("Error dari Gemini API:", error);

@@ -4,7 +4,8 @@ Content-Type: application/json
 
 {
   "user_id": 21,
-  "tanggal": "2025-07-30",
+  "tanggal": "2025-08-03",
+  "mood": "senang",
   "keluhan": "Hari ini saya merasa sedikit pusing dan mual sejak bangun tidur. Saya juga merasa sedikit gelisah karena kurang tidur tadi malam."
 }
 
@@ -21,5 +22,5 @@ GET http://localhost:3000/api/jurnal/detail/6
 Content-Type: application/json
 
 {
-  "id": 6
+  "id": 14
 }

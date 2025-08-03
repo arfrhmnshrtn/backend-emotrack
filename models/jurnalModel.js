@@ -1,9 +1,9 @@
 const db = require("../db");
 
-exports.saveJurnal = (user_id, tanggal, keluhan, response, callback) => {
+exports.saveJurnal = (user_id, tanggal, mood, keluhan, response, callback) => {
   db.query(
-    "INSERT INTO jurnal_harian (user_id, tanggal, keluhan, response) VALUES (?, ?, ?, ?)",
-    [user_id, tanggal, keluhan, response],
+    "INSERT INTO jurnal_harian (user_id, tanggal, mood, keluhan, response) VALUES (?, ?, ?, ?, ?)",
+    [user_id, tanggal, mood, keluhan, response],
     callback
   );
 };
@@ -21,4 +21,15 @@ exports.getJurnalsById = (id, callback) => {
     if (err) return callback(err);
     callback(null, results[0]); // bisa null kalau tidak ditemukan
   });
+};
+
+exports.getJurnalsByDate = (user_id, tanggal, callback) => {
+  db.query(
+    "SELECT * FROM jurnal_harian WHERE user_id = ? AND tanggal = ?",
+    [user_id, tanggal],
+    (err, results) => {
+      if (err) return callback(err);
+      callback(null, results); // bisa kosong kalau tidak ada jurnal pada tanggal tersebut
+    }
+  );
 };

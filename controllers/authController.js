@@ -2,9 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const nodemailer = require("nodemailer");
-// const crypto = require("crypto");
 
-// Penyimpanan OTP sementara (gunakan Redis untuk produksi)
+// Penyimpanan OTP sementara
 const pendingUsers = {};
 const resetTokens = {};
 
