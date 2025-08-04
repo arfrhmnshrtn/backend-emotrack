@@ -1,0 +1,25 @@
+### Simpan data gizi harian
+POST http://localhost:3000/api/gizi/save
+Content-Type: application/json
+
+{
+  "user_id": 24,
+  "tanggal": "2025-08-01",
+  "berat_badan": 55,
+  "waktu": "pagi",
+  "jumlah": 1,
+  "satuan": "piring",
+  "makanan": "nasi goreng telur dengan potongan timun"
+}
+
+### Ambil data gizi harian berdasarkan user_id
+GET http://localhost:3000/api/gizi/user/24
+Content-Type: application/json
+
+{
+  "user_id": 24
+}
+
+### Ambil data gizi harian berdasarkan id
+GET http://localhost:3000/api/gizi/detail/6
+

@@ -3,18 +3,18 @@ POST http://localhost:3000/api/jurnal/generate
 Content-Type: application/json
 
 {
-  "user_id": 21,
-  "tanggal": "2025-08-03",
+  "user_id": 24,
+  "tanggal": "2025-08-05",
   "mood": "senang",
   "keluhan": "Hari ini saya merasa sedikit pusing dan mual sejak bangun tidur. Saya juga merasa sedikit gelisah karena kurang tidur tadi malam."
 }
 
 ### ambil jurnal by userrId
-GET http://localhost:3000/api/jurnal/21
+GET http://localhost:3000/api/jurnal/24
 Content-Type: application/json
 
 {
-  "user_id": 21
+  "user_id": 24
 }
 
 ### ambil jurnal by id
@@ -22,5 +22,5 @@ GET http://localhost:3000/api/jurnal/detail/6
 Content-Type: application/json
 
 {
-  "id": 14
+  "id": 
 }
