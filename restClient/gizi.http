@@ -4,12 +4,12 @@ Content-Type: application/json
 
 {
   "user_id": 24,
-  "tanggal": "2025-08-01",
-  "berat_badan": 55,
+  "tanggal": "2025-08-05",
+  "berat_badan": 70,
   "waktu": "pagi",
   "jumlah": 1,
-  "satuan": "piring",
-  "makanan": "nasi goreng telur dengan potongan timun"
+  "satuan": "porsi",
+  "makanan": "1 porsi nasi padang dengan ayam bakar dan sayur bayam"
 }
 
 ### Ambil data gizi harian berdasarkan user_id

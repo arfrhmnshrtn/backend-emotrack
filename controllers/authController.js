@@ -267,7 +267,7 @@ exports.verifyResetCode = (req, res) => {
 };
 
 // Reset Password
-exports.resetPassword = (req, res) => {
+exports.resetPassword = async (req, res) => {
   const { email, code, newPassword } = req.body;
   const token = resetTokens[email];
 
@@ -279,17 +279,51 @@ exports.resetPassword = (req, res) => {
     return res.status(400).json({ message: "Password minimal 8 karakter" });
   }
 
-  bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
-    if (err)
-      return res.status(500).json({ message: "Gagal mengenkripsi password" });
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    User.updatePasswordByEmail(email, hashedPassword, (err) => {
-      if (err) {
-        return res.status(500).json({ message: "Gagal update password" });
-      }
+    await User.updatePasswordByEmail(email, hashedPassword); // Pastikan ini versi promise atau ubah ke promisify
 
-      delete resetTokens[email];
-      res.json({ message: "Password berhasil direset" });
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
-  });
+
+    const mailOptions = {
+      from: `"Emotrack Support" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "Password Berhasil Direset - Emotrack",
+      html: `
+            <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; padding: 40px;">
+              <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 30px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                  <img src="https://i.ibb.co/fnYKrGH/emotrack-logo.png" alt="Emotrack" style="width: 120px;" />
+                </div>
+
+                <h2 style="color: #333333; text-align: center;">Password Anda Berhasil Direset</h2>
+                <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+                  Halo,<br><br>
+                  Kami ingin memberi tahu bahwa password akun Anda telah berhasil diubah. Jika Anda tidak melakukan perubahan ini, segera hubungi tim dukungan kami untuk tindakan lebih lanjut.
+                </p>
+
+                <p style="color: #888888; font-size: 14px; text-align: center;">
+                  Email ini dikirim secara otomatis, mohon untuk tidak membalas.
+                </p>
+              </div>
+            </div>
+          `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    delete resetTokens[email];
+
+    res.json({ message: "Password berhasil direset" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Terjadi kesalahan internal" });
+  }
 };
