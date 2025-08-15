@@ -6,8 +6,8 @@ Content-Type: application/json
   "username": "arief",
   "name": "Arief Rachman",
   "date": "2000-01-01",
-  "email": "iw8628940@gmail.com",
-  "password": "emotrack123",
+  "email": "ariefrachmansahertian@gmail.com",
+  "password": "arief140105",
   "role": "ibu_hamil",
   "hpht": "2024-01-01"
 }
@@ -26,8 +26,8 @@ POST http://localhost:3000/api/auth/verify-register-otp
 Content-Type: application/json
 
 {
-  "email": "iw8628940@gmail.com",
-  "code": "871467"
+  "email": "ariefrachmansahertian@gmail.com",
+  "code": "866921"
 }
 
 ### login akun
@@ -35,8 +35,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "iw8628940@gmail.com",
-  "password": "emotrack123"
+  "email": "ariefrachmansahertian@gmail.com",
+  "password": "arief140105"
 }
 
 ### Kirim kode verifikasi ke email lupa password

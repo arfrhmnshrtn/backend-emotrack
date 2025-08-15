@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "user_id": 24,
-  "tanggal": "2025-08-05",
+  "tanggal": "2025-08-01",
   "mood": "senang",
   "keluhan": "Hari ini saya merasa sedikit pusing dan mual sejak bangun tidur. Saya juga merasa sedikit gelisah karena kurang tidur tadi malam."
 }
